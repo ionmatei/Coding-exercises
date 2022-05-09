@@ -19,21 +19,20 @@ class MedianFinder:
             if len(self.left_heap) > len(self.right_heap) + 1:
                 num = - heapq.heappop(self.left_heap)
                 heapq.heappush(self.right_heap, num)
-            if len(self.right_heap) > len(self.left_heap) + 1:
+            elif len(self.right_heap) > len(self.left_heap) + 1:
                 num = heapq.heappop(self.right_heap)
                 heapq.heappush(self.left_heap, -num)
+            else:
+                pass
 
     def findMedian(self):
-        if len(self.left_heap) == 0 and len(self.right_heap) == 1:
+        if len(self.left_heap) > len(self.right_heap):
+            return -self.left_heap[0]
+        if len(self.left_heap) < len(self.right_heap):
             return self.right_heap[0]
-        if len(self.left_heap) == 1 and len(self.right_heap) == 0:
-            return -self.left_heap[0]
-        if len(self.left_heap) == len(self.right_heap):
-            return 0.5*(-self.left_heap[0] + self.right_heap[0])
-        elif len(self.left_heap) > len(self.right_heap):
-            return -self.left_heap[0]
         else:
-            return self.right_heap[0]
+            return 0.5 * (-self.left_heap[0] + self.right_heap[0])
+
 
     def insertSortedArray(self, nums, num):
         if len(nums) == 1:
